@@ -1,6 +1,6 @@
 {
-  "name": "MOC Studio - Management of Change",
-  "description": "A comprehensive Management of Change (MOC) system for the Oil & Gas industry, featuring risk assessment matrices, asset management, and workflow tracking.",
+  "name": "MOC Studio",
+  "description": "The Ultimate Oil & Gas Management of Change (MOC) Ecosystem with real-time telemetry, risk analysis, and AI technical support.",
   "requestFramePermissions": [
     "geolocation"
   ]

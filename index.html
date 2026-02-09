@@ -1,163 +1,171 @@
-
 <!DOCTYPE html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MOC Studio - Gestão de Mudanças</title>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOC Studio | Industrial Ecosystem</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-      body {
-        font-family: 'Inter', sans-serif;
-      }
-      .risk-cell {
-        aspect-ratio: 1 / 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.2s;
-        font-weight: bold;
-        font-size: 0.75rem;
-      }
-      .risk-cell:hover {
-        filter: brightness(1.1);
-        transform: scale(1.05);
-      }
-
-      /* Estilos Modernos para Relatórios PDF (A4) */
-      @media print {
-        @page {
-          margin: 0;
-          size: A4 portrait;
+        :root {
+            /* High Contrast Dark Mode */
+            --bg-primary: #020617; /* Deeper Slate for better contrast */
+            --text-primary: #ffffff; 
+            --text-secondary: #cbd5e1; /* Slate 300 */
+            --text-muted: #64748b; /* Slate 500 */
+            --panel-bg: rgba(15, 23, 42, 0.8);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --aurora-1: #1e3a8a;
+            --aurora-2: #1e40af;
+            --aurora-3: #020617;
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         }
 
-        html, body {
-          width: 210mm;
-          height: auto;
-          background: white !important;
-          color: black !important;
-          margin: 0 !important;
-          padding: 0 !important;
-          overflow: visible !important;
+        html.light {
+            --bg-primary: #f8fafc;
+            --text-primary: #0f172a; /* Slate 900 */
+            --text-secondary: #334155; /* Slate 700 */
+            --text-muted: #64748b; /* Slate 500 */
+            --panel-bg: rgba(255, 255, 255, 0.85);
+            --border-color: rgba(0, 0, 0, 0.08);
+            --aurora-1: #dbeafe;
+            --aurora-2: #f1f5f9;
+            --aurora-3: #ffffff;
+            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
-        aside, nav, button, .no-print, .modal-close-btn, .fixed, header {
-          display: none !important;
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            overflow: hidden;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background 0.4s ease, color 0.4s ease;
         }
 
-        #root, main, #main-scroll-container {
-          display: block !important;
-          width: 100% !important;
-          height: auto !important;
-          overflow: visible !important;
-          position: static !important;
-          margin: 0 !important;
-          padding: 0 !important;
+        #root {
+            height: 100vh;
         }
 
-        /* Forçar grid em coluna única para PDF, EXCETO onde a grade é funcional (Matrizes) */
-        .grid:not(.keep-grid) {
-          display: block !important;
+        .aurora-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 15% 15%, var(--aurora-1) 0%, transparent 45%),
+                        radial-gradient(circle at 85% 85%, var(--aurora-2) 0%, transparent 45%),
+                        radial-gradient(circle at 50% 50%, var(--aurora-3) 0%, transparent 100%);
+            filter: blur(120px);
+            animation: aurora 30s infinite alternate ease-in-out;
+            opacity: 0.5;
         }
 
-        .keep-grid {
-          display: grid !important;
+        @keyframes aurora {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.1) rotate(2deg); }
         }
 
-        .lg\:col-span-8, .lg\:col-span-4, .lg\:col-span-12, .md\:grid-cols-2 {
-          width: 100% !important;
-          max-width: 100% !important;
-          margin-bottom: 2rem !important;
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
         }
 
-        /* Forçar renderização de cores e backgrounds no PDF */
-        * {
-          -webkit-print-color-adjust: exact !important;
-          print-color-adjust: exact !important;
-          color-adjust: exact !important;
+        .dark .glow-title {
+            text-shadow: 0 0 15px rgba(96, 165, 250, 0.3);
+            color: #60a5fa; /* Blue 400 */
         }
 
-        /* Controle de Quebras de Página Inteligentes */
-        .page-break-avoid {
-          page-break-inside: avoid !important;
-          break-inside: avoid !important;
-          position: relative;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(59, 130, 246, 0.5);
         }
 
-        .page-break-before {
-          page-break-before: always !important;
-          break-before: page !important;
+        .leaflet-container {
+            height: 100%;
+            width: 100%;
+            background: #0f172a;
+            border-radius: 1.5rem;
         }
 
-        /* Ajustes específicos para elementos UI no PDF */
-        .rounded-[3rem], .rounded-[3.5rem] {
-          border-radius: 1.5rem !important; /* Arredondamento suave no PDF */
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+            animation: spin-slow 12s linear infinite;
+        }
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce-slow {
+            animation: bounce-slow 4s ease-in-out infinite;
         }
         
-        .shadow-sm, .shadow-xl, .shadow-2xl {
-          box-shadow: none !important;
-          border: 1px solid #e2e8f0 !important;
+        /* Marker Pulse Animation */
+        @keyframes marker-pulse {
+            0% { transform: scale(0.8); opacity: 0.8; }
+            100% { transform: scale(2.4); opacity: 0; }
+        }
+        .marker-pulse-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            animation: marker-pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
         }
 
-        section {
-          margin-bottom: 2rem !important;
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
         }
-
-        /* Garantir legibilidade de fontes no PDF */
-        p, h1, h2, h3, h4, span {
-          color: #000 !important;
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
-
-        .text-blue-600, .text-blue-500 {
-          color: #1e40af !important; /* Azul escuro para contraste no PDF */
+        
+        /* Fix for custom marker icons */
+        .custom-marker {
+            background: none !important;
+            border: none !important;
         }
-      }
-
-      /* Leaflet specific dark theme fix */
-      .dark .leaflet-tile {
-        filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
-      }
-      .dark .leaflet-container {
-        background: #0f172a;
-      }
-
-      /* Custom scrollbar para modal e listas */
-      .custom-scrollbar::-webkit-scrollbar {
-        width: 6px;
-      }
-      .custom-scrollbar::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 10px;
-      }
-      .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #334155;
-      }
     </style>
-  <script type="importmap">
+<script type="importmap">
 {
   "imports": {
-    "recharts": "https://esm.sh/recharts@^3.7.0",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "react": "https://esm.sh/react@^19.2.4",
-    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.475.0?external=react",
+    "@google/genai": "https://esm.sh/@google/genai@1.40.0",
+    "recharts": "https://esm.sh/recharts@2.15.0?external=react,react-dom",
+    "react-leaflet": "https://esm.sh/react-leaflet@5.0.0?external=react,react-dom,leaflet",
     "leaflet": "https://esm.sh/leaflet@1.9.4",
-    "@google/genai": "https://esm.sh/@google/genai@^1.40.0"
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/"
   }
 }
 </script>
 <link rel="stylesheet" href="/index.css">
 </head>
-  <body class="bg-gray-50 text-gray-900 transition-colors duration-300">
+<body>
+    <div class="aurora-bg"></div>
     <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
 </body>
 </html>

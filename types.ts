@@ -1,130 +1,139 @@
 
-export enum UserRole {
-  ADMIN = 'ADMIN',
-  GERENTE_INSTALACAO = 'GERENTE_INSTALACAO',
-  ENG_PROCESSO = 'ENG_PROCESSO',
-  TECNICO_MANUTENCAO = 'TECNICO_MANUTENCAO',
-  COORD_HSE = 'COORD_HSE',
-  COMITE_APROVACAO = 'COMITE_APROVACAO'
+export type MOCStatus = 'Draft' | 'Evaluation' | 'Approved' | 'Implementation' | 'Completed';
+export type MOCPriority = 'Low' | 'Medium' | 'High' | 'Critical';
+export type ChangeType = 'Mechanical' | 'Process' | 'Procedure' | 'Personnel' | 'Electrical' | 'Instrumentation' | 'Civil';
+export type TaskStatus = 'To Do' | 'In Progress' | 'Blocked' | 'Done';
+
+export interface Attachment {
+  name: string;
+  type: string;
+  size: number;
+  data: string;
 }
 
-export enum MOCStatus {
-  RASCUNHO = 'Rascunho',
-  SUBMETIDO = 'Submetido',
-  EM_AVALIACAO = 'Em Avaliação',
-  EM_REVISAO = 'Em Revisão',
-  APROVADO = 'Aprovado',
-  REJEITADO = 'Rejeitado',
-  IMPLEMENTADO = 'Implementado',
-  CONCLUIDO = 'Concluído'
-}
-
-export enum RiskLevel {
-  BAIXO = 'Baixo',
-  MEDIO = 'Médio',
-  ALTO = 'Alto',
-  CRITICO = 'Crítico'
-}
-
-export interface AuditChange {
-  field: string;
-  oldValue: any;
-  newValue: any;
+export interface MOCTask {
+  id: string;
+  title: string;
+  assignee: string;
+  dueDate: string;
+  completed: boolean;
+  status: TaskStatus;
+  type: 'Pre' | 'Post'; // Pre-implementation or Post-implementation
 }
 
 export interface AuditEntry {
-  id: string;
-  userId: string;
-  userName: string;
-  userRole: UserRole;
-  action: 'READ' | 'WRITE' | 'LOGIN' | 'LOGOUT' | 'DELETE' | 'STATUS_CHANGE' | 'WORK_ORDER' | 'SECURITY_VIOLATION';
-  resource: string;
-  timestamp: string;
-  details?: string;
-  changes?: AuditChange[];
-  ip?: string; // Simulado
+  timestamp: number;
+  user: string;
+  action: string;
+  details: string;
 }
 
-export interface MOCHistoryEntry {
+export interface RiskAssessment {
+  probability: number;
+  severity: number;
+  score: number;
+  rationale: string;
+  assessedAt: number;
+}
+
+export interface RegulatoryStandard {
   id: string;
-  userId: string;
-  userName: string;
-  action: string;
-  timestamp: string;
-  type: 'status_change' | 'comment' | 'system' | 'work_order';
-  details?: string;
+  code: string;
+  title: string;
+  status: 'Active' | 'Compliance' | 'Technical';
+  desc: string;
+  link?: string;
+}
+
+export interface UsefulLink {
+  id: string;
+  label: string;
+  url: string;
+  icon: string; // Key for the icon map
+}
+
+export interface MOCRequest {
+  id: string;
+  title: string;
+  requester: string;
+  status: MOCStatus;
+  priority: MOCPriority;
+  changeType: ChangeType;
+  discipline: string; // New field as requested
+  facility: string;
+  createdAt: string;
+  impacts: {
+    safety: boolean;
+    environmental: boolean;
+    operational: boolean;
+    regulatory: boolean;
+    emergency: boolean;
+  };
+  description: string;
+  riskScore: number;
+  riskAssessment?: RiskAssessment;
+  technicalSummary?: string;
+  technicalAssessment?: string;
+  attachments?: Attachment[];
+  tasks?: MOCTask[];
+  auditLog: AuditEntry[];
+  relatedAssetTags?: string[];
+}
+
+export interface Facility {
+  id: string;
+  name: string;
+  type: 'FPSO' | 'Fixed' | 'Onshore';
+  coordinates: [number, number];
+  status: 'Online' | 'Offline' | 'Maintenance';
+}
+
+export interface Asset {
+  tag: string;
+  name: string;
+  facility: string;
+  type: string;
+  category: string; // New field
+  material: string; // New field
+  lastMaint: string;
+  parameters: {
+    temperature: number;
+    pressure: number;
+    flow: number;
+  };
+  attachments?: Attachment[];
 }
 
 export interface User {
   id: string;
   name: string;
   email: string;
-  role: UserRole;
-  active: boolean;
+  role: 'Engineer' | 'Manager' | 'Auditor';
+  status?: 'Active' | 'Suspended';
 }
 
-export interface AuthResponse {
-  user: User;
-  token: string;
-  refreshToken: string;
+export interface ChatMessage {
+  role: 'user' | 'ai';
+  content: string;
+  timestamp: number;
 }
 
-export interface Facility {
-  id: string;
-  name: string;
-  location: string;
-  type: string;
-  status: 'Ativo' | 'Inativo' | 'Manutenção';
-}
-
-export interface Asset {
-  id: string;
-  facilityId: string;
-  tag: string;
-  name: string;
-  type: string;
-  status: string;
-  lastMaintenance: string;
-}
-
-export interface MOCRequest {
+export interface ChatSession {
   id: string;
   title: string;
-  description: string;
-  scope: string;
-  justification: string;
-  status: MOCStatus;
-  requesterId: string;
-  facilityId: string;
-  createdAt: string;
-  updatedAt: string;
-  history: MOCHistoryEntry[];
-  type?: string; // Routine, Major, Emergency
+  messages: ChatMessage[];
+  updatedAt: number;
 }
 
-export interface RiskAssessment {
-  id: string;
-  mocId: string;
-  probability: number; // 1-5
-  severity: number;    // 1-5
-  mitigationMeasures: string;
-  residualRisk: RiskLevel;
-}
-
-export interface WorkOrder {
-  id: string;
-  mocId: string;
-  title: string;
-  assignedTo: string;
-  dueDate: string;
-  status: 'Pendente' | 'Em Andamento' | 'Concluída' | 'Atrasada';
-  createdAt?: string;
-  notificationEmail?: string;
-}
-
-export interface StandardLink {
+export interface Notification {
   id: string;
   title: string;
-  url: string;
-  category: string;
+  message: string;
+  type: 'info' | 'warning' | 'error' | 'success';
+  timestamp: number;
+  read: boolean;
+  link?: string;
 }
+
+export type Language = 'en-US' | 'pt-BR';
+export type Theme = 'dark' | 'light';
