@@ -15,7 +15,8 @@
     "@google/genai": "1.40.0",
     "recharts": "2.15.0",
     "react-leaflet": "5.0.0",
-    "leaflet": "1.9.4"
+    "leaflet": "1.9.4",
+    "jspdf": "2.5.1"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

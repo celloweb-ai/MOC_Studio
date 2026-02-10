@@ -5,7 +5,6 @@ import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import MOCList from './components/MOCList';
 import RiskMatrix from './components/RiskMatrix';
-import AIChatAssistant from './components/AIChatAssistant';
 import FacilityMap from './components/FacilityMap';
 import AssetInventory from './components/AssetInventory';
 import HelpCenter from './components/HelpCenter';
@@ -32,6 +31,17 @@ const MainLayout: React.FC = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  // Theme synchronization effect
+  useEffect(() => {
+    // If no user, force light theme for login clarity
+    if (!user) {
+      document.documentElement.className = 'light';
+    } else {
+      document.documentElement.className = theme;
+    }
+    localStorage.setItem('moc_theme', theme);
+  }, [theme, user]);
 
   // Effect to switch to MOC tab when emergency wizard is activated
   useEffect(() => {
@@ -60,7 +70,6 @@ const MainLayout: React.FC = () => {
       case 'dashboard': return <Dashboard />;
       case 'mocs': return <MOCList />;
       case 'risk': return <RiskMatrix />;
-      case 'ai': return <AIChatAssistant />;
       case 'facilities': return <FacilityMap />;
       case 'assets': return <AssetInventory />;
       case 'users': return <UserManagement />;

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { LayoutDashboard, Factory, Box, ClipboardList, ShieldAlert, MessageSquare, HelpCircle, Users } from 'lucide-react';
+import { LayoutDashboard, Factory, Box, ClipboardList, ShieldAlert, HelpCircle, Users } from 'lucide-react';
 
 export const FACILITIES = [
   { id: 'F01', name: 'P-51 FPSO', type: 'FPSO', coordinates: [-22.5, -40.5] as [number, number], status: 'Online' },
@@ -23,7 +23,6 @@ export const NAV_ITEMS = [
   { id: 'mocs', label: 'MOC Lifecycle', icon: <ClipboardList size={20} /> },
   { id: 'risk', label: 'Risk Matrix', icon: <ShieldAlert size={20} /> },
   { id: 'users', label: 'User Management', icon: <Users size={20} /> },
-  { id: 'ai', label: 'AI Assistant', icon: <MessageSquare size={20} /> },
   { id: 'help', label: 'Help Center', icon: <HelpCircle size={20} /> },
 ];
 
@@ -36,7 +35,6 @@ export const TRANSLATIONS = {
     mocs: 'MOC Lifecycle',
     risk: 'Risk Analysis',
     users: 'User Management',
-    ai: 'AI Engineering Advisor',
     help: 'Help Center',
     status: 'Status',
     priority: 'Priority',
@@ -44,7 +42,6 @@ export const TRANSLATIONS = {
     actions: 'Actions',
     createNew: 'New MOC Request',
     technicalSummary: 'Technical Summary',
-    askGemini: 'Ask Gemini Assistant...',
     signOut: 'Sign Out',
     activeMocs: 'Active MOCs',
     criticalRisks: 'Critical Risks',
@@ -82,10 +79,6 @@ export const TRANSLATIONS = {
     govRule: 'Governance Rule',
     rule1: 'Score 15+: Requires HSE Director Approval',
     rule2: 'Score 8-14: Requires Technical Manager sign-off',
-    aiAdvisorDesc: 'Powered by Gemini 3.0 Flash for technical intelligence.',
-    aiOffline: 'Unable to reach technical advisor at this moment.',
-    typeQuery: 'Type your engineering query...',
-    generatingResponse: 'Generating Technical Response...',
     geospatialLogistics: 'Geospatial Logistics',
     realTimeAsset: 'Real-time asset positioning and status overlay.',
     allUnitsSecured: 'All Units Secured',
@@ -150,7 +143,6 @@ export const TRANSLATIONS = {
     changeType: 'Change Category',
     auditLog: 'Compliance Audit Log',
     taskTracker: 'Accountability & Tasks',
-    runAssessment: 'Run AI Technical Assessment',
     submitApproval: 'Submit for Approval',
     approveChange: 'Approve MOC',
     implementChange: 'Start Implementation',
@@ -159,7 +151,7 @@ export const TRANSLATIONS = {
     standards: 'Regulatory Library',
     workflow: 'MOC Lifecycle Guide',
     tutorials: 'Video Tutorials',
-    linkRisk: 'Vincular Avaliação de Risco',
+    linkRisk: 'Link Risk Assessment',
     applyToMoc: 'Apply to this MOC',
     riskRationale: 'Risk Rationale',
     saveAssessment: 'Save Assessment',
@@ -202,7 +194,6 @@ export const TRANSLATIONS = {
     mocs: 'Ciclo de Vida MOC',
     risk: 'Análise de Risco',
     users: 'Gestão de Usuários',
-    ai: 'Consultor de Engenharia IA',
     help: 'Central de Ajuda',
     status: 'Status',
     priority: 'Prioridade',
@@ -210,7 +201,6 @@ export const TRANSLATIONS = {
     actions: 'Ações',
     createNew: 'Nova Solicitação MOC',
     technicalSummary: 'Resumo Técnico',
-    askGemini: 'Pergunte ao Assistente Gemini...',
     signOut: 'Sair',
     activeMocs: 'MOCs Ativos',
     criticalRisks: 'Riscos Críticos',
@@ -248,10 +238,6 @@ export const TRANSLATIONS = {
     govRule: 'Regra de Governança',
     rule1: 'Score 15+: Exige Aprovação do Diretor de SMS',
     rule2: 'Score 8-14: Exige assinatura do Gerente Técnico',
-    aiAdvisorDesc: 'Alimentado por Gemini 3.0 Flash para inteligência técnica.',
-    aiOffline: 'Não foi possível contatar o consultor técnico no momento.',
-    typeQuery: 'Digite sua consulta de engenharia...',
-    generatingResponse: 'Gerando Resposta Técnica...',
     geospatialLogistics: 'Logística Geoespacial',
     realTimeAsset: 'Posicionamento de ativos e sobreposição de status em tempo real.',
     allUnitsSecured: 'Todas Unidades Seguras',
@@ -316,7 +302,6 @@ export const TRANSLATIONS = {
     changeType: 'Categoria da Mudança',
     auditLog: 'Log de Auditoria de Conformidade',
     taskTracker: 'Responsabilidade e Tarefas',
-    runAssessment: 'Executar Avaliação Técnica IA',
     submitApproval: 'Enviar para Aprovação',
     approveChange: 'Aprovar MOC',
     implementChange: 'Iniciar Implementação',
