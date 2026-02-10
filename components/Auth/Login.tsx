@@ -59,44 +59,44 @@ const Login: React.FC = () => {
     setLoading(false);
   };
 
-  const inputClasses = "w-full bg-slate-50 border border-slate-300 rounded-xl py-3 pl-11 pr-4 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all";
-  const labelClasses = "block text-sm font-bold text-slate-700 mb-1 uppercase tracking-tight";
+  const inputClasses = "w-full bg-white border border-slate-300 rounded-xl py-3 pl-11 pr-4 text-slate-950 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all shadow-sm";
+  const labelClasses = "block text-xs font-black text-slate-800 mb-1.5 uppercase tracking-wider";
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-slate-100 font-sans">
-      <div className="w-full max-w-md bg-white rounded-[2.5rem] shadow-2xl border border-white overflow-hidden p-8 md:p-12">
+    <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50 font-sans selection:bg-blue-100 selection:text-blue-900">
+      <div className="w-full max-w-md bg-white rounded-[3rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.15)] border border-slate-100 overflow-hidden p-10 md:p-14">
         
         {/* Logo Section */}
-        <div className="flex flex-col items-center mb-10 text-center">
-          <div className="p-4 bg-blue-600 rounded-2xl shadow-lg shadow-blue-500/30 mb-4">
-            <Hexagon className="text-white fill-white/10" size={32} />
+        <div className="flex flex-col items-center mb-12 text-center">
+          <div className="p-4 bg-blue-600 rounded-[1.5rem] shadow-xl shadow-blue-600/20 mb-6">
+            <Hexagon className="text-white fill-white/10" size={36} />
           </div>
-          <h1 className="text-3xl font-black text-slate-900 tracking-tighter">
+          <h1 className="text-4xl font-black text-slate-950 tracking-tighter">
             MOC<span className="text-blue-600">.</span>STUDIO
           </h1>
-          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mt-1">Management of Change</p>
+          <p className="text-[11px] font-black text-slate-600 uppercase tracking-[0.4em] mt-2">Management of Change</p>
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-3 text-red-700 text-sm font-medium animate-in fade-in zoom-in duration-200">
-            <Info size={18} className="shrink-0" />
+          <div className="mb-8 p-4 bg-rose-50 border border-rose-200 rounded-2xl flex items-center gap-4 text-rose-800 text-sm font-bold animate-in fade-in slide-in-from-top-2 duration-300">
+            <Info size={20} className="shrink-0 text-rose-600" />
             <span>{error}</span>
           </div>
         )}
 
         {successMsg && (
-          <div className="mb-6 p-4 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-3 text-emerald-700 text-sm font-medium animate-in fade-in zoom-in duration-200">
-            <CheckCircle size={18} className="shrink-0" />
+          <div className="mb-8 p-4 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center gap-4 text-emerald-800 text-sm font-bold animate-in fade-in slide-in-from-top-2 duration-300">
+            <CheckCircle size={20} className="shrink-0 text-emerald-600" />
             <span>{successMsg}</span>
           </div>
         )}
 
         {mode === 'signin' && (
-          <form onSubmit={handleSignIn} className="space-y-5">
+          <form onSubmit={handleSignIn} className="space-y-6">
             <div>
-              <label className={labelClasses}>Email Address</label>
+              <label className={labelClasses}>Engineering Mail</label>
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                 <input
                   required
                   type="email"
@@ -109,14 +109,14 @@ const Login: React.FC = () => {
             </div>
 
             <div>
-              <div className="flex justify-between mb-1">
-                <label className={labelClasses}>Password</label>
-                <button type="button" onClick={() => setMode('recovery')} className="text-xs font-bold text-blue-600 hover:text-blue-700">
-                  Forgot Key?
+              <div className="flex justify-between mb-1.5">
+                <label className={labelClasses}>Access Key</label>
+                <button type="button" onClick={() => setMode('recovery')} className="text-[10px] font-black uppercase tracking-widest text-blue-600 hover:text-blue-700 transition-colors">
+                  Lost Key?
                 </button>
               </div>
               <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                 <input
                   required
                   type="password"
@@ -129,53 +129,53 @@ const Login: React.FC = () => {
             </div>
 
             <div className="flex items-center">
-              <label className="flex items-center space-x-2 cursor-pointer group">
+              <label className="flex items-center space-x-3 cursor-pointer group">
                 <input
                   type="checkbox"
                   checked={rememberMe}
                   onChange={e => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                  className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
                 />
-                <span className="text-sm font-medium text-slate-600 group-hover:text-slate-900 transition-colors">Remember device</span>
+                <span className="text-sm font-bold text-slate-700 group-hover:text-slate-950 transition-colors">Keep Session Active</span>
               </label>
             </div>
 
             <button
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 py-3.5 rounded-xl text-white font-bold text-lg flex items-center justify-center space-x-3 transition-all shadow-lg shadow-blue-500/20 active:scale-[0.98] disabled:opacity-50"
+              className="w-full bg-slate-950 hover:bg-blue-600 py-4 rounded-2xl text-white font-black text-sm uppercase tracking-[0.2em] flex items-center justify-center space-x-3 transition-all shadow-xl active:scale-[0.97] disabled:opacity-50"
             >
-              {loading ? <Loader2 className="animate-spin" size={20} /> : <span>Sign In</span>}
+              {loading ? <Loader2 className="animate-spin" size={20} /> : <span>Engage Terminal</span>}
             </button>
 
-            <div className="text-center text-sm font-medium text-slate-500 pt-2">
-              Need access?{' '}
-              <button type="button" onClick={() => setMode('signup')} className="text-blue-600 font-bold hover:underline">
-                Request Clearance
+            <div className="text-center text-xs font-bold text-slate-500 pt-4">
+              Missing Clearance?{' '}
+              <button type="button" onClick={() => setMode('signup')} className="text-blue-600 font-black hover:underline uppercase tracking-widest">
+                Request Entry
               </button>
             </div>
           </form>
         )}
 
         {mode === 'signup' && (
-          <form onSubmit={handleSignUp} className="space-y-4">
+          <form onSubmit={handleSignUp} className="space-y-5">
             <div>
-              <label className={labelClasses}>Full Name</label>
+              <label className={labelClasses}>Full Identification</label>
               <div className="relative">
-                <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                 <input
                   required
                   type="text"
                   value={name}
                   onChange={e => setName(e.target.value)}
-                  placeholder="John Doe"
+                  placeholder="Engineering Lead Name"
                   className={inputClasses}
                 />
               </div>
             </div>
             <div>
-              <label className={labelClasses}>Engineering Email</label>
+              <label className={labelClasses}>Registered Mail</label>
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                 <input
                   required
                   type="email"
@@ -187,9 +187,9 @@ const Login: React.FC = () => {
               </div>
             </div>
             <div>
-              <label className={labelClasses}>Role Selection</label>
+              <label className={labelClasses}>Clearance Grade</label>
               <div className="relative">
-                <Shield className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                <Shield className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                 <select
                   value={role}
                   onChange={e => setRole(e.target.value as any)}
@@ -203,22 +203,22 @@ const Login: React.FC = () => {
             </div>
             <button
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 py-3.5 rounded-xl text-white font-bold text-lg flex items-center justify-center transition-all disabled:opacity-50 mt-4"
+              className="w-full bg-blue-600 hover:bg-blue-700 py-4 rounded-2xl text-white font-black text-sm uppercase tracking-[0.2em] flex items-center justify-center transition-all disabled:opacity-50 mt-4 shadow-lg active:scale-[0.97]"
             >
-              {loading ? <Loader2 className="animate-spin" size={20} /> : <span>Create Account</span>}
+              {loading ? <Loader2 className="animate-spin" size={20} /> : <span>Provision Account</span>}
             </button>
-            <button type="button" onClick={() => setMode('signin')} className="w-full text-sm font-bold text-slate-500 hover:text-blue-600 pt-2">
-              Back to Sign In
+            <button type="button" onClick={() => setMode('signin')} className="w-full text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-blue-600 pt-4 flex items-center justify-center gap-2 transition-colors">
+              <ArrowLeft size={12} /> Back to Entry Point
             </button>
           </form>
         )}
 
         {mode === 'recovery' && (
-          <form onSubmit={(e) => { e.preventDefault(); setMode('signin'); }} className="space-y-5">
+          <form onSubmit={(e) => { e.preventDefault(); setMode('signin'); }} className="space-y-6">
             <div>
-              <label className={labelClasses}>Registered Email</label>
+              <label className={labelClasses}>Registered Engineering Mail</label>
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                 <input
                   required
                   type="email"
@@ -227,35 +227,35 @@ const Login: React.FC = () => {
                 />
               </div>
             </div>
-            <button className="w-full bg-blue-600 hover:bg-blue-700 py-3.5 rounded-xl text-white font-bold transition-all">
-              Send Reset Link
+            <button className="w-full bg-blue-600 hover:bg-blue-700 py-4 rounded-2xl text-white font-black text-sm uppercase tracking-[0.2em] transition-all shadow-lg active:scale-[0.97]">
+              Transmit Reset Code
             </button>
-            <button type="button" onClick={() => setMode('signin')} className="w-full text-sm font-bold text-slate-500 hover:text-blue-600">
-              Back to Sign In
+            <button type="button" onClick={() => setMode('signin')} className="w-full text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-blue-600 flex items-center justify-center gap-2">
+              <ArrowLeft size={12} /> Return to Login
             </button>
           </form>
         )}
 
-        {/* Bypass Section - Sandbox Only */}
+        {/* Sandbox Bypass */}
         {mode === 'signin' && (
-          <div className="mt-10 pt-8 border-t border-slate-100">
-            <div className="flex items-center justify-center space-x-2 mb-6 opacity-60">
-              <span className="h-px w-10 bg-slate-200"></span>
-              <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Sandbox Bypass</span>
-              <span className="h-px w-10 bg-slate-200"></span>
+          <div className="mt-12 pt-10 border-t border-slate-100">
+            <div className="flex items-center justify-center space-x-3 mb-8">
+              <span className="h-px w-8 bg-slate-200"></span>
+              <span className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em]">Developer Access</span>
+              <span className="h-px w-8 bg-slate-200"></span>
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-4">
               {suggestedProfiles.map(p => (
                 <button
                   key={p.email}
                   onClick={() => handleQuickLogin(p)}
                   disabled={loading}
-                  className="flex flex-col items-center p-3 rounded-2xl bg-slate-50 border border-slate-200 hover:border-blue-400 hover:bg-blue-50 transition-all group"
+                  className="flex flex-col items-center p-4 rounded-[1.5rem] bg-slate-50 border border-slate-200 hover:border-blue-600 hover:bg-white hover:shadow-xl hover:shadow-blue-600/5 transition-all group"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-slate-200 group-hover:bg-blue-200 flex items-center justify-center text-slate-500 group-hover:text-blue-600 mb-2">
-                    <UserIcon size={16} />
+                  <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 group-hover:bg-blue-600 group-hover:border-blue-600 flex items-center justify-center text-slate-600 group-hover:text-white mb-3 shadow-sm transition-all">
+                    <UserIcon size={20} />
                   </div>
-                  <span className="text-[9px] font-bold text-slate-700 uppercase">{p.label}</span>
+                  <span className="text-[10px] font-black text-slate-800 uppercase tracking-tight">{p.label}</span>
                 </button>
               ))}
             </div>
@@ -265,9 +265,9 @@ const Login: React.FC = () => {
       </div>
       
       {/* Background decoration */}
-      <div className="fixed inset-0 pointer-events-none z-[-1] opacity-50">
-        <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-blue-200 blur-[120px] rounded-full"></div>
-        <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-emerald-100 blur-[120px] rounded-full"></div>
+      <div className="fixed inset-0 pointer-events-none z-[-1] opacity-40">
+        <div className="absolute top-0 right-0 w-[60%] h-[60%] bg-blue-100/50 blur-[140px] rounded-full"></div>
+        <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-emerald-100/50 blur-[140px] rounded-full"></div>
       </div>
     </div>
   );
